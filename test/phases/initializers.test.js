@@ -36,6 +36,33 @@ describe('phases/initializers', function() {
     });
   });
 
+  describe('phase with Array argument', function() {
+    var app = new Object();
+    app.order = [];
+
+    var error;
+
+    before(function(done) {
+
+      var phase = initializers([__dirname + '/../data/initializers/test', __dirname + '/../data/initializers/test-multiple-folders']);
+      phase.call(app, function(err) {
+        error = err;
+        return done();
+      });
+    });
+
+    it('should call callback', function() {
+      expect(error).to.be.undefined;
+    });
+
+    it('should run initializers in correct order', function() {
+      expect(app.order).to.have.length(3);
+      expect(app.order[0]).to.equal('01_async');
+      expect(app.order[1]).to.equal('02_sync');
+      expect(app.order[2]).to.equal('04_log');
+    });
+  });
+
   describe('phase with dirname option', function() {
     var app = new Object();
     app.order = [];
@@ -106,7 +133,6 @@ describe('phases/initializers', function() {
       });
 
     });
-
   });
 
   describe('phase with initializer that calls done with error', function() {

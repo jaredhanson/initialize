@@ -44,7 +44,7 @@ describe('phases/initializers', function() {
 
     before(function(done) {
 
-      var phase = initializers([__dirname + '/../data/initializers/test', __dirname + '/../data/initializers/test-multiple-folders']);
+      var phase = initializers([__dirname + '/../data/initializers/test-multiple-folders', __dirname + '/../data/initializers/test']);
       phase.call(app, function(err) {
         error = err;
         return done();
